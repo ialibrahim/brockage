@@ -39,7 +39,7 @@ public class AssetsService {
         return modelMapper.map(asset, Asset.class);
     }
 
-    public Asset withdraw(Long customerId, Double amount) throws BadRequestException {
+    public Asset withdraw(Long customerId, Double amount) {
 
         // Check if customer already has TRY (Turkish Lira) asset
         Optional<AssetEntity> assetOptional = assetRepository.findByCustomerIdAndAssetName(customerId, TRY_ASSETS);

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class MapperFactory {
 
     @Bean
-    public ModelMapper modelMapper(){
+    public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
 
         modelMapper.createTypeMap(Order.class, OrderEntity.class).addMappings(mp -> {
@@ -19,9 +19,9 @@ public class MapperFactory {
             mp.skip(OrderEntity::setCreateDate);
         });
 
-        modelMapper.createTypeMap(Asset.class, AssetEntity.class).addMappings(mp -> {
-            mp.skip(AssetEntity::setId);
-        });
+        modelMapper.createTypeMap(Asset.class, AssetEntity.class).addMappings(mp ->
+                mp.skip(AssetEntity::setId)
+        );
 
         return modelMapper;
     }

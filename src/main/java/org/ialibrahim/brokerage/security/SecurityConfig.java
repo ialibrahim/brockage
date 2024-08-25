@@ -52,7 +52,7 @@ public class SecurityConfig {
     @Bean
     public InMemoryUserDetailsManager userDetailsService(Pbkdf2PasswordEncoder passwordEncoder) {
         UserDetails admin = User.withUsername("admin")
-                .password(passwordEncoder.encode("adminPass"))
+                .password("df48d34b7285c6d3eda3a3e2a904e2c63afcaae0936ec383eb7cad10b10177664b12de90")
                 .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(admin);
