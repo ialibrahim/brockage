@@ -4,6 +4,8 @@ import org.ialibrahim.brokerage.dao.OrderRepository;
 import org.ialibrahim.brokerage.entity.OrderEntity;
 import org.ialibrahim.brokerage.exception.InvalidOperationException;
 import org.ialibrahim.brokerage.model.Order;
+import org.ialibrahim.brokerage.security.AccessAuthority;
+import org.ialibrahim.brokerage.security.User;
 import org.ialibrahim.brokerage.type.OrderSide;
 import org.ialibrahim.brokerage.type.OrderStatus;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -20,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class OrderServiceTest {
@@ -37,6 +43,15 @@ class OrderServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         orderService = new OrderService(orderRepository, assetsService, modelMapper);
+        //SecurityContextHolder.getContext().getAuthentication()
+
+        User applicationUser = new User();
+        applicationUser.getAuthorities().add(AccessAuthority.ADMIN);
+        Authentication authentication = mock(Authentication.class);
+        SecurityContext securityContext = mock(SecurityContext.class);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(applicationUser);
     }
 
     @Test
