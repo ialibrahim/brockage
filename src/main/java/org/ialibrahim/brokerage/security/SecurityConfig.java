@@ -9,18 +9,22 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsUtils;
 
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final UserDetailsService customerUserDetailsService;
+    private final BrokerageAuthFilter brokerageAuthFilter;
     @Bean
     public Pbkdf2PasswordEncoder passwordEncoder() {
 
@@ -30,12 +34,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, InMemoryUserDetailsManager userDetailsService)
+    public AuthenticationManager authenticationManager(HttpSecurity http,
+                                                       Pbkdf2PasswordEncoder passwordEncoder)
             throws Exception {
 
         AuthenticationManagerBuilder authenticationManagerBuilder = http
                 .getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userDetailsService);
+        authenticationManagerBuilder.userDetailsService(customerUserDetailsService).passwordEncoder(passwordEncoder);
         authenticationManagerBuilder.parentAuthenticationManager(null);
         return authenticationManagerBuilder.build();
     }
@@ -43,18 +48,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(r -> r.anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
-        http.addFilterAfter(new BrokerageAuthFilter(), BasicAuthenticationFilter.class);
+                .authorizeHttpRequests(r -> r.requestMatchers(CorsUtils::isCorsRequest).permitAll())
+                .authorizeHttpRequests(r -> r.requestMatchers(new AntPathRequestMatcher("/login")).authenticated()).httpBasic(Customizer.withDefaults())
+                .authorizeHttpRequests(r -> r.requestMatchers(new AntPathRequestMatcher("**")).authenticated())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterAfter(brokerageAuthFilter, BasicAuthenticationFilter.class);
+
         return http.build();
     }
 
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService(Pbkdf2PasswordEncoder passwordEncoder) {
-        UserDetails admin = User.withUsername("admin")
-                .password("df48d34b7285c6d3eda3a3e2a904e2c63afcaae0936ec383eb7cad10b10177664b12de90")
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(admin);
-    }
 }
