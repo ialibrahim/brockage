@@ -22,7 +22,7 @@ public class OrderService {
     private final ModelMapper modelMapper;
 
     public Order createOrder(Order order) {
-
+        PermissionChecker.checkPermission(order.getCustomerId());
         validateOrder(order);
 
         OrderEntity orderEntity = modelMapper.map(order, OrderEntity.class);
@@ -49,12 +49,15 @@ public class OrderService {
     }
 
     public List<Order> listOrders(Long customerId, LocalDateTime startDate, LocalDateTime endDate) {
+        PermissionChecker.checkPermission(customerId);
         return orderRepository.findByCustomerIdAndCreateDateBetween(customerId, startDate, endDate).stream()
                 .map(o->modelMapper.map(o, Order.class)).toList();
     }
 
     public void cancelOrder(Long orderId) {
+
         OrderEntity order = orderRepository.getReferenceById(orderId);
+        PermissionChecker.checkPermission(order.getCustomerId());
         if (order.getStatus().equals(OrderStatus.PENDING)) {
             order.setStatus(OrderStatus.CANCELED);
             orderRepository.save(order);
