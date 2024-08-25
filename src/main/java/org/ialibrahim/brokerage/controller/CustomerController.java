@@ -1,7 +1,6 @@
 package org.ialibrahim.brokerage.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.ialibrahim.brokerage.model.Asset;
 import org.ialibrahim.brokerage.model.Order;
 import org.ialibrahim.brokerage.service.AssetsService;

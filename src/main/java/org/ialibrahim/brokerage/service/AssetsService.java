@@ -1,7 +1,6 @@
 package org.ialibrahim.brokerage.service;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.ialibrahim.brokerage.dao.AssetRepository;
 import org.ialibrahim.brokerage.entity.AssetEntity;
 import org.ialibrahim.brokerage.exception.InvalidOperationException;
@@ -20,11 +19,13 @@ public class AssetsService {
     private final ModelMapper modelMapper;
 
     public List<Asset> listAssets(Long customerId) {
+        PermissionChecker.checkPermission(customerId);
         return assetRepository.findByCustomerId(customerId).stream()
-                .map(a->modelMapper.map(a, Asset.class)).toList();
+                .map(a -> modelMapper.map(a, Asset.class)).toList();
     }
 
     public Asset deposite(Long customerId, Double amount) {
+        PermissionChecker.onlyAdmin();
 
         // Check if customer already has TRY (Turkish Lira) asset
         AssetEntity asset = assetRepository.findByCustomerIdAndAssetName(customerId, TRY_ASSETS)
@@ -40,6 +41,7 @@ public class AssetsService {
     }
 
     public Asset withdraw(Long customerId, Double amount) {
+        PermissionChecker.checkPermission(customerId);
 
         // Check if customer already has TRY (Turkish Lira) asset
         Optional<AssetEntity> assetOptional = assetRepository.findByCustomerIdAndAssetName(customerId, TRY_ASSETS);
@@ -59,12 +61,16 @@ public class AssetsService {
     }
 
     public Double getUsableSize(Long customerId, String assetName) {
+        PermissionChecker.checkPermission(customerId);
         return assetRepository.findByCustomerIdAndAssetName(customerId, assetName)
                 .map(AssetEntity::getUsableSize).orElse(0d);
     }
 
     public Double getUsableFund(Long customerId) {
+        PermissionChecker.checkPermission(customerId);
         return assetRepository.findByCustomerIdAndAssetName(customerId, TRY_ASSETS)
                 .map(AssetEntity::getUsableSize).orElse(0d);
     }
+
+
 }
