@@ -47,4 +47,4 @@ To test the API endpoints, follow these steps using the provided Postman collect
 * Click on each request to view details and send them to your local server to test the endpoints.
 
 ### Step 3: Using Environment Variables
-The collection contains the required credentials as variables at the collection level, you have to consume the `/api/login` end point first. The `Post-response` script copies the `api-token` to the variables to be used in the API successor calls.
+The collection contains the required credentials as variables at the collection level, you have to consume the `/api/login` end point first. The `Post-response` script copies the `api-token` to the variables to be used in the API successor calls. So, once the login is successfull, other endpoints can be called without any manual handling of the Bearer token.
