@@ -1,13 +1,13 @@
-package org.ialibrahim.brockage;
+package org.ialibrahim.brokerage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BrockageApplication {
+public class BrokerageApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BrockageApplication.class, args);
+        SpringApplication.run(BrokerageApplication.class, args);
     }
 
 }

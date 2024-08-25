@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.ialibrahim</groupId>
-    <artifactId>brockage</artifactId>
+    <artifactId>brokerage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>brockage</name>
     <description>brockage</description>
