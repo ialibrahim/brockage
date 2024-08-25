@@ -49,7 +49,7 @@ public class CustomerController {
 
     @PutMapping("/{customerId}/withdraw/{amount}")
     public ResponseEntity<Asset> withdrawMoney(@PathVariable("customerId") Long customerId,
-                                                     @PathVariable("amount") Double amount) throws BadRequestException {
+                                                     @PathVariable("amount") Double amount) {
 
         Asset assets = assetsService.withdraw(customerId, amount);
         return new ResponseEntity<>(assets, HttpStatus.ACCEPTED);
