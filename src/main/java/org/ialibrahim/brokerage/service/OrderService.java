@@ -1,6 +1,7 @@
 package org.ialibrahim.brokerage.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.ialibrahim.brokerage.dao.OrderRepository;
 import org.ialibrahim.brokerage.entity.OrderEntity;
 import org.ialibrahim.brokerage.exception.InvalidOperationException;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -22,6 +24,8 @@ public class OrderService {
     private final ModelMapper modelMapper;
 
     public Order createOrder(Order order) {
+        log.debug("Creating order, customer: {}", order.getCustomerId());
+
         PermissionChecker.checkPermission(order.getCustomerId());
         validateOrder(order);
 
@@ -33,9 +37,12 @@ public class OrderService {
     }
 
     private void validateOrder(Order order) {
+        log.debug("Validating order, customer: {}", order.getCustomerId());
+
         if (order.getOrderSide().equals(OrderSide.SELL)) {
             Double usableSize = assetsService.getUsableSize(order.getCustomerId(), order.getAssetName());
             if (usableSize < order.getSize()) {
+                log.warn("invalid order size");
                 throw new InvalidOperationException("Usable size is less than the requested size");
             }
         }
@@ -43,18 +50,21 @@ public class OrderService {
         if (order.getOrderSide().equals(OrderSide.BUY)) {
             Double usableFund = assetsService.getUsableFund(order.getCustomerId());
             if (usableFund < order.getPrice()) {
+                log.warn("invalid order price");
                 throw new InvalidOperationException("Usable fund is less than the offered price");
             }
         }
     }
 
     public List<Order> listOrders(Long customerId, LocalDateTime startDate, LocalDateTime endDate) {
+        log.debug("List orders, customer: {}, date: {} - {}", customerId, startDate, endDate);
         PermissionChecker.checkPermission(customerId);
         return orderRepository.findByCustomerIdAndCreateDateBetween(customerId, startDate, endDate).stream()
                 .map(o->modelMapper.map(o, Order.class)).toList();
     }
 
     public void cancelOrder(Long orderId) {
+        log.debug("Cancelling order, orderId: {}", orderId);
 
         OrderEntity order = orderRepository.getReferenceById(orderId);
         PermissionChecker.checkPermission(order.getCustomerId());

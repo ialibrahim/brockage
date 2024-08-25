@@ -23,6 +23,8 @@ public class LoginController {
     public ResponseEntity<Void> login() throws JsonProcessingException {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        log.info("User {} logged in", user.getUsername());
+
         String token = jwtTokenUtil.createToken(user);
         return ResponseEntity.ok().headers(buildResponseHeader(token)).body(null);
     }
