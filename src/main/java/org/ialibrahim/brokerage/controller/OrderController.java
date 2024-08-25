@@ -20,9 +20,9 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<List<Order>> listOrders(
-            @RequestParam Long customerId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+            @RequestParam(value = "customerId", required = false) Long customerId,
+            @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
 
         List<Order> orders = orderService.listOrders(customerId, startDate, endDate);
         return new ResponseEntity<>(orders, HttpStatus.OK);

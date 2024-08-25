@@ -59,7 +59,7 @@ public class OrderService {
             order.setStatus(OrderStatus.CANCELED);
             orderRepository.save(order);
         } else {
-            throw new IllegalStateException("Orders with " + order.getStatus() + " status cannot be canceled.");
+            throw new InvalidOperationException("Orders with " + order.getStatus() + " status cannot be canceled.");
         }
     }
 }
