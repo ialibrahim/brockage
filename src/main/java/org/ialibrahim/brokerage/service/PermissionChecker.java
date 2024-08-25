@@ -7,6 +7,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class PermissionChecker {
 
+    private PermissionChecker() {
+
+    }
+
     public static void checkPermission(Long customerId) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (user.getAuthorities().contains(AccessAuthority.ADMIN)) {
