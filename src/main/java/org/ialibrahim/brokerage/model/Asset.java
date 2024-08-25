@@ -1,15 +1,11 @@
-package org.ialibrahim.brokerage.entity;
+package org.ialibrahim.brokerage.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
+
 @Data
-@Table(name="ASSETS")
 public class Asset {
-    @Id
     private Long id;
     private Long customerId;
     private String assetName;

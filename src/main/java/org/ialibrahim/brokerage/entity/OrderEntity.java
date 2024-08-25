@@ -2,17 +2,19 @@ package org.ialibrahim.brokerage.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import org.ialibrahim.brokerage.type.OrderSide;
 import org.ialibrahim.brokerage.type.OrderStatus;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Table(name="ORDERS")
-public class Order {
+public class OrderEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private Long customerId;
     private String assetName;
@@ -22,5 +24,6 @@ public class Order {
     private Double price;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-    private Date createDate;
+    @CreationTimestamp
+    private LocalDateTime createDate;
 }
