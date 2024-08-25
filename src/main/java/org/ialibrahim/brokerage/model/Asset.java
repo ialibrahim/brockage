@@ -1,11 +1,12 @@
 package org.ialibrahim.brokerage.model;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 
 @Data
 public class Asset {
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
     private Long customerId;
     private String assetName;

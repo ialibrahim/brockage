@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class Order {
-
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
     private Long customerId;
     private String assetName;

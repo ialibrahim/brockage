@@ -1,7 +1,6 @@
 package org.ialibrahim.brokerage.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.ialibrahim.brokerage.entity.OrderEntity;
 import org.ialibrahim.brokerage.model.Order;
 import org.ialibrahim.brokerage.service.OrderService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +26,12 @@ public class OrderController {
 
         List<Order> orders = orderService.listOrders(customerId, startDate, endDate);
         return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+        Order createdOrder = orderService.createOrder(order);
+        return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{orderId}")

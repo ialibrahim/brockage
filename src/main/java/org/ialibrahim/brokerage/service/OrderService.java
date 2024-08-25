@@ -29,7 +29,7 @@ public class OrderService {
         orderEntity.setStatus(OrderStatus.PENDING);
         orderRepository.saveAndFlush(orderEntity);
 
-        return modelMapper.map(order, Order.class);
+        return modelMapper.map(orderEntity, Order.class);
     }
 
     private void validateOrder(Order order) {

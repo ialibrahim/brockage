@@ -32,17 +32,11 @@ public class CustomerController {
     @GetMapping("/{customerId}/orders")
     public ResponseEntity<List<Order>> listOrders(
             @PathVariable("customerId") Long customerId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+            @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
 
         List<Order> orders = orderService.listOrders(customerId, startDate, endDate);
         return new ResponseEntity<>(orders, HttpStatus.OK);
-    }
-
-    @PostMapping("/{customerId}/orders")
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        Order createdOrder = orderService.createOrder(order);
-        return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
 
     @PutMapping("/{customerId}/deposit/{amount}")

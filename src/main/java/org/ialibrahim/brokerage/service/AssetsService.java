@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.ialibrahim.brokerage.dao.AssetRepository;
 import org.ialibrahim.brokerage.entity.AssetEntity;
+import org.ialibrahim.brokerage.exception.InvalidOperationException;
 import org.ialibrahim.brokerage.model.Asset;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -43,12 +44,12 @@ public class AssetsService {
         // Check if customer already has TRY (Turkish Lira) asset
         Optional<AssetEntity> assetOptional = assetRepository.findByCustomerIdAndAssetName(customerId, TRY_ASSETS);
         if (assetOptional.isEmpty()) {
-            throw new BadRequestException("Customer has no TRY assets");
+            throw new InvalidOperationException("Customer has no TRY assets");
         }
 
         AssetEntity asset = assetOptional.get();
         if (asset.getUsableSize() < amount) {
-            throw new BadRequestException("Customer's usable TRY assets is less than the required amount");
+            throw new InvalidOperationException("Customer's usable TRY assets is less than the required amount");
         }
 
         asset.setSize(asset.getSize() - amount);

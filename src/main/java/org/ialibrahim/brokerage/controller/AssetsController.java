@@ -1,7 +1,6 @@
 package org.ialibrahim.brokerage.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.ialibrahim.brokerage.entity.AssetEntity;
 import org.ialibrahim.brokerage.model.Asset;
 import org.ialibrahim.brokerage.service.AssetsService;
 import org.springframework.http.HttpStatus;
