@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ialibrahim.brokerage.dao.AssetRepository;
 import org.ialibrahim.brokerage.entity.AssetEntity;
+import org.ialibrahim.brokerage.entity.OrderEntity;
 import org.ialibrahim.brokerage.exception.InvalidOperationException;
 import org.ialibrahim.brokerage.model.Asset;
 import org.modelmapper.ModelMapper;
@@ -81,4 +82,16 @@ public class AssetsService {
     }
 
 
+    public void createAssetFromOrder(OrderEntity order) {
+
+        AssetEntity asset = assetRepository.findByCustomerIdAndAssetName(order.getCustomerId(), order.getAssetName())
+                .orElseGet(() ->
+                        new AssetEntity(null, order.getCustomerId(), order.getAssetName(), 0d, 0d));
+
+        asset.setSize(asset.getSize() + order.getSize());
+        asset.setUsableSize(asset.getUsableSize() + order.getSize());
+
+        assetRepository.save(asset);
+
+    }
 }
