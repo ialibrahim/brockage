@@ -1,0 +1,796 @@
+{
+	"info": {
+		"_postman_id": "41e5bb8d-5f53-4060-ad50-ba3a82602bd8",
+		"name": "Brokerage API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10170935"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let token = pm.response.headers.get('Authorization');\r",
+									"pm.collectionVariables.set(\"api-token\", token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "adminPass",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "withdraw Money",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/customer/:customerId/withdraw/:amount",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customer",
+								":customerId",
+								"withdraw",
+								":amount"
+							],
+							"variable": [
+								{
+									"key": "customerId",
+									"value": "123",
+									"description": "(Required) "
+								},
+								{
+									"key": "amount",
+									"value": "124",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customer/:customerId/withdraw/:amount",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer",
+										":customerId",
+										"withdraw",
+										":amount"
+									],
+									"variable": [
+										{
+											"key": "customerId"
+										},
+										{
+											"key": "amount"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"<long>\",\n  \"customerId\": \"<long>\",\n  \"assetName\": \"<string>\",\n  \"size\": \"<double>\",\n  \"usableSize\": \"<double>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "deposit Money",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/customer/:customerId/deposit/:amount",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customer",
+								":customerId",
+								"deposit",
+								":amount"
+							],
+							"variable": [
+								{
+									"key": "customerId",
+									"value": "<long>",
+									"description": "(Required) "
+								},
+								{
+									"key": "amount",
+									"value": "<double>",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customer/:customerId/deposit/:amount",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer",
+										":customerId",
+										"deposit",
+										":amount"
+									],
+									"variable": [
+										{
+											"key": "customerId"
+										},
+										{
+											"key": "amount"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"<long>\",\n  \"customerId\": \"<long>\",\n  \"assetName\": \"<string>\",\n  \"size\": \"<double>\",\n  \"usableSize\": \"<double>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "list Orders 1",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/customer/:customerId/orders?startDate=2024-08-22T22:11:44&endDate=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customer",
+								":customerId",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2024-08-22T22:11:44",
+									"description": "(Required) "
+								},
+								{
+									"key": "endDate",
+									"value": "",
+									"description": "(Required) "
+								}
+							],
+							"variable": [
+								{
+									"key": "customerId",
+									"value": "123",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customer/:customerId/orders?startDate=<dateTime>&endDate=<dateTime>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer",
+										":customerId",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "<dateTime>",
+											"description": "(Required) "
+										},
+										{
+											"key": "endDate",
+											"value": "<dateTime>",
+											"description": "(Required) "
+										}
+									],
+									"variable": [
+										{
+											"key": "customerId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<long>\",\n    \"customerId\": \"<long>\",\n    \"assetName\": \"<string>\",\n    \"orderSide\": \"SELL\",\n    \"size\": \"<double>\",\n    \"price\": \"<double>\",\n    \"status\": \"PENDING\",\n    \"createDate\": \"<dateTime>\"\n  },\n  {\n    \"id\": \"<long>\",\n    \"customerId\": \"<long>\",\n    \"assetName\": \"<string>\",\n    \"orderSide\": \"SELL\",\n    \"size\": \"<double>\",\n    \"price\": \"<double>\",\n    \"status\": \"PENDING\",\n    \"createDate\": \"<dateTime>\"\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "list Assets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/customer/:customerId/assets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customer",
+								":customerId",
+								"assets"
+							],
+							"variable": [
+								{
+									"key": "customerId",
+									"value": "123",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customer/:customerId/assets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer",
+										":customerId",
+										"assets"
+									],
+									"variable": [
+										{
+											"key": "customerId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<long>\",\n    \"customerId\": \"<long>\",\n    \"assetName\": \"<string>\",\n    \"size\": \"<double>\",\n    \"usableSize\": \"<double>\"\n  },\n  {\n    \"id\": \"<long>\",\n    \"customerId\": \"<long>\",\n    \"assetName\": \"<string>\",\n    \"size\": \"<double>\",\n    \"usableSize\": \"<double>\"\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "delete Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders/:orderId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								":orderId"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": "<long>",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/orders/:orderId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "list Orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders?customerId=<long>&startDate=<dateTime>&endDate=<dateTime>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "<long>",
+									"description": "(Required) "
+								},
+								{
+									"key": "startDate",
+									"value": "<dateTime>",
+									"description": "(Required) "
+								},
+								{
+									"key": "endDate",
+									"value": "<dateTime>",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/orders?customerId=<long>&startDate=<dateTime>&endDate=<dateTime>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "customerId",
+											"value": "<long>",
+											"description": "(Required) "
+										},
+										{
+											"key": "startDate",
+											"value": "<dateTime>",
+											"description": "(Required) "
+										},
+										{
+											"key": "endDate",
+											"value": "<dateTime>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<long>\",\n    \"customerId\": \"<long>\",\n    \"assetName\": \"<string>\",\n    \"orderSide\": \"SELL\",\n    \"size\": \"<double>\",\n    \"price\": \"<double>\",\n    \"status\": \"PENDING\",\n    \"createDate\": \"<dateTime>\"\n  },\n  {\n    \"id\": \"<long>\",\n    \"customerId\": \"<long>\",\n    \"assetName\": \"<string>\",\n    \"orderSide\": \"SELL\",\n    \"size\": \"<double>\",\n    \"price\": \"<double>\",\n    \"status\": \"PENDING\",\n    \"createDate\": \"<dateTime>\"\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "create Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerId\": 123,\n  \"assetName\": \"UHT\",\n  \"orderSide\": \"BUY\",\n  \"size\": \"1240\",\n  \"price\": \"623.25\",\n  \"status\": \"PENDING\",\n  \"createDate\": \"2024-08-25T17:53:55.547Z\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<long>\",\n  \"customerId\": \"<long>\",\n  \"assetName\": \"<string>\",\n  \"orderSide\": \"SELL\",\n  \"size\": \"<double>\",\n  \"price\": \"<double>\",\n  \"status\": \"PENDING\",\n  \"createDate\": \"<dateTime>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customer/:customerId/orders",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer",
+										":customerId",
+										"orders"
+									],
+									"variable": [
+										{
+											"key": "customerId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"<long>\",\n  \"customerId\": \"<long>\",\n  \"assetName\": \"<string>\",\n  \"orderSide\": \"SELL\",\n  \"size\": \"<double>\",\n  \"price\": \"<double>\",\n  \"status\": \"PENDING\",\n  \"createDate\": \"<dateTime>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "list Assets By Customer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/assets?customerId=<long>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"assets"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "<long>",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/assets?customerId=<long>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"assets"
+									],
+									"query": [
+										{
+											"key": "customerId",
+											"value": "<long>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<long>\",\n    \"customerId\": \"<long>\",\n    \"assetName\": \"<string>\",\n    \"size\": \"<double>\",\n    \"usableSize\": \"<double>\"\n  },\n  {\n    \"id\": \"<long>\",\n    \"customerId\": \"<long>\",\n    \"assetName\": \"<string>\",\n    \"size\": \"<double>\",\n    \"usableSize\": \"<double>\"\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "Match order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders/:orderId/match",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								":orderId",
+								"match"
+							],
+							"variable": [
+								{
+									"key": "orderId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{api-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "api-token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin-username",
+			"value": "admin",
+			"type": "string"
+		},
+		{
+			"key": "admin-password",
+			"value": "adminPass",
+			"type": "string"
+		},
+		{
+			"key": "customer-username",
+			"value": "customer1",
+			"type": "string"
+		},
+		{
+			"key": "customer-password",
+			"value": "customer1",
+			"type": "string"
+		}
+	]
+}
