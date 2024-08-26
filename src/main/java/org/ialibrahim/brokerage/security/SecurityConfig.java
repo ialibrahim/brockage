@@ -48,8 +48,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(r -> r.requestMatchers(CorsUtils::isCorsRequest).permitAll())
-                .authorizeHttpRequests(r -> r.requestMatchers(new AntPathRequestMatcher("/login")).authenticated()).httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(r -> r.requestMatchers(new AntPathRequestMatcher("**")).authenticated())
+                .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterAfter(brokerageAuthFilter, BasicAuthenticationFilter.class);
 
