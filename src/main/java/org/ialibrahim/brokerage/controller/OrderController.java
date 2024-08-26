@@ -40,4 +40,10 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{orderId}/match")
+    public ResponseEntity<Order> matchOrder(@PathVariable Long orderId) {
+        Order matchedOrder = orderService.matchOrder(orderId);
+        return new ResponseEntity<>(matchedOrder, HttpStatus.OK);
+    }
+
 }

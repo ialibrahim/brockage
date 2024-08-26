@@ -75,4 +75,21 @@ public class OrderService {
             throw new InvalidOperationException("Orders with " + order.getStatus() + " status cannot be canceled.");
         }
     }
+
+    public Order matchOrder(Long orderId) {
+        log.debug("Matching order, orderId: {}", orderId);
+        PermissionChecker.onlyAdmin();
+
+        OrderEntity order = orderRepository.getReferenceById(orderId);
+        if (order.getStatus().equals(OrderStatus.PENDING)) {
+            order.setStatus(OrderStatus.MATCHED);
+
+            assetsService.createAssetFromOrder(order);
+            orderRepository.save(order);
+        } else {
+            throw new InvalidOperationException("Orders with " + order.getStatus() + " status cannot be matched.");
+        }
+
+        return modelMapper.map(order, Order.class);
+    }
 }
